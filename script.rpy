@@ -27,9 +27,28 @@ label continue:
     $ quick_menu = True
     $ _skipping = True
 
-    show screen say(n, player_name)
-    scene bg cloud
-    #n "Hi [player_name]."
+    #show screen say(n, player_name)
+    scene bg school
+
+    "Hello [player_name]. Welcome to Pointcrest Academy!"
+    "You're joining the class late, so you'll need to study extra hard to keep up with your peers."
+    scene bg school
+    "Before your lesson starts, you mill about the common space and see many new faces."
+   
+    menu:
+        "Who do you approach?"
+
+        "Eric":
+            jump eric
+
+        "Lily":
+            jump lily
+
+#Meeting eric
+label eric:
+    show eric meet
+
+    e "Oh, hello. I'm Eric. You're new right?"
 
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the
