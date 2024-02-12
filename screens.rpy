@@ -1608,6 +1608,21 @@ style slider_slider:
     variant "small"
     xsize 900
 
+# this is the screen where you can "meet" the characters for the first time
+screen meet_nav():
+    add "meet"
+    modal True
+
+        #lily meet button
+    imagebutton idle "lilymeetbutton":
+        # focus_mask True
+        action Jump("lily")
+        xpos 65 ypos 290
+
+    imagebutton idle "doneMeet":
+        #focus_mask auto
+        action Jump("postMeet")
+        xpos 98 ypos 1471
 
 
 

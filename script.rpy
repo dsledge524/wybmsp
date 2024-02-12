@@ -1,7 +1,13 @@
 ﻿# The script of the game goes in this file.
 # Declare characters used by this game. The color argument colorizes the name of the character.
+init:
+    image lilymeetbutton = "lilymeetbutton.png"
+    image doneMeet = "doneMeet.png"
 
-define e = Character("Eric")
+
+
+
+define l = Character("Lily")
 define n = Character("narrator")
 
 # The game starts here.
@@ -28,28 +34,26 @@ label continue:
     $ _skipping = True
 
     #show screen say(n, player_name)
-    scene bg school
+    show bg school
 
     "Hello [player_name]. Welcome to Pointcrest Academy!"
     "You're joining the class late, so you'll need to study extra hard to keep up with your peers."
-    scene bg school
+
     "Before your lesson starts, you mill about the common space and see many new faces."
    
-    menu:
-        "Who do you approach?"
+    call screen meet_nav
 
-        "Eric":
-            jump eric
 
-        "Lily":
-            jump lily
 
-#Meeting eric
-label eric:
-    show eric meet
+#Meeting lily
+label lily:
+    show lily meet
 
-    e "Oh, hello. I'm Eric. You're new right?"
+    l "Oh, hello. I'm Lily. You're new right?"
 
+
+label postMeet:
+    pass
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the
     # images directory to show it.
@@ -79,45 +83,7 @@ label eric:
     #now we create the label continue to jump here after we decide the name
 #    return
 
-#label continue:
-#    $ player_name = player_name.strip() #removes spaces at the end
-#
-#    if player_name == "":
-#        $ player_name="Josh" #will be used if player types nothing
-##
-#    hide screen enterName
-#
-#    $ quick_menu = True
-#    $ _skipping = True
 
-    #show screen say(n, player_name)
-    #scene bg school
-
-#    "Hello [player_name]. Welcome to Pointcrest Academy!"
-#    "You’re joining the class late, so you’ll need to study extra hard to keep up with your peers."
-#    "Before your lesson starts, you mill about the common space and see many new faces.  "
-
-#    scene bg hallway
-
-#    menu:
-#        "Who do you approach?"
-#
-#        "Eric":
-#            jump eric
-#
-#        "Lily":
-#            jump lily
-
-#label eric:
-#    show eric meet
-
-#    e "Oh, hello. I'm Eric. You're new right?"
-
-    # Show a background. This uses a placeholder by default, but you can
-    # add a file (named either "bg room.png" or "bg room.jpg") to the
-    # images directory to show it.
-
-    # scene bg room
 
     # This shows a character sprite. A placeholder is used, but you can
     # replace it by adding a file named "eileen happy.png" to the images
