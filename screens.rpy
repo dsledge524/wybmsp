@@ -249,14 +249,14 @@ screen quick_menu():
             xalign 0.5
             yalign 1.0
 
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action ShowMenu('preferences')
+            #textbutton _("Back") action Rollback()
+            #textbutton _("History") action ShowMenu('history')
+            #textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
+            #textbutton _("Auto") action Preference("auto-forward", "toggle")
+            #textbutton _("Save") action ShowMenu('save')
+            #textbutton _("Q.Save") action QuickSave()
+            #textbutton _("Q.Load") action QuickLoad()
+            #textbutton _("Prefs") action ShowMenu('preferences')
 
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
@@ -264,7 +264,7 @@ screen quick_menu():
 init python:
     config.overlay_screens.append("quick_menu")
 
-default quick_menu = True
+default quick_menu = False
 
 style quick_button is default
 style quick_button_text is button_text
@@ -1612,17 +1612,38 @@ style slider_slider:
 screen meet_nav():
     add "meet"
     modal True
+    
 
         #lily meet button
     imagebutton idle "lilymeetbutton":
         # focus_mask True
         action Jump("lily")
         xpos 65 ypos 290
+        
 
     imagebutton idle "doneMeet":
         #focus_mask auto
         action Jump("postMeet")
         xpos 98 ypos 1471
+
+
+#screen where you choose who u wanna study with
+screen study_nav():
+    add "meet"
+    modal True
+    
+        #lily study button
+    imagebutton idle "lilymeetbutton":
+        # focus_mask True
+        action Jump("lilyCharacter")
+        xpos 65 ypos 290
+        
+#This is the character screen where u choose if u wanna talk or study
+screen character_nav():
+    modal True
+    imagebutton idle "lilyStudyButton":
+        action Jump("lilyStudy")
+        xpos ypos
 
 
 

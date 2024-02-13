@@ -3,6 +3,7 @@
 init:
     image lilymeetbutton = "lilymeetbutton.png"
     image doneMeet = "doneMeet.png"
+    image lilyCharPage = "lilyCharPage.png"
 
 
 
@@ -49,32 +50,47 @@ label continue:
 #Meeting lily
 label lily:
     show lily meet
-
+    #convo bt u and lily no menu
     l "Oh, hello. I'm Lily. You're new right?"
-
-    y "Yep, this is my first day!"
+    y "Yep, I'm [player_name]. This is my first day!"
     l "OMG! Welcome!"
-    l "I hope your first day is going well! What class are you most excited for?"
-    menu:
-        "English":
-            pass
-        "Math":
-            pass
+    l "I'm actually president of the Math Club, you're totally welcome to join
+    - or if you ever need Math help- I'm your gal!"
+    y "Thanks! I'll keep that in mind"
+    l "Well [player_name], it was nice to meet you. I gotta run to a club meeting, but I hope I see you around!"
+
+    call screen meet_nav
+    #l "I hope your first day is going well! What class are you most excited for?"
+    #menu:
+    #    "English":
+    #        pass
+    #    "Math":
+    #        pass
             #jump("lilyhappy")
-        "Umm...none?":
-            pass
+    #    "Umm...none?":
+    #        pass
 
 
 
-
+#after clicking "i dont want to talk to anyone else" button
 label postMeet:
-    pass
+    show bg room 
+    n "Oop, there's the bell. Better hurry to class!"
+    "*hours later*"
+    n "Whew! You completed your lessons for the day, but it's clear that 
+    you'll need to study hard to keep up with your classmates..."
+
+    call screen study_nav
+
+label lilyCharacter:
+    show lilyCharPage
+    n "you made it here"
+    #call screen character_nav
+    #STILL NEED TO MAKE THIS SCREEN IN SCREENS outline down by other screens in screens.rpy
+    
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the
     # images directory to show it.
-
-    # scene bg room
-
     # This shows a character sprite. A placeholder is used, but you can
     # replace it by adding a file named "eileen happy.png" to the images
     # directory.
