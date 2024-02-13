@@ -9,6 +9,7 @@ init:
 
 define l = Character("Lily")
 define n = Character("narrator")
+define y = Character("you")
 
 # The game starts here.
 
@@ -50,6 +51,20 @@ label lily:
     show lily meet
 
     l "Oh, hello. I'm Lily. You're new right?"
+
+    y "Yep, this is my first day!"
+    l "OMG! Welcome!"
+    l "I hope your first day is going well! What class are you most excited for?"
+    menu:
+        "English":
+            pass
+        "Math":
+            pass
+            #jump("lilyhappy")
+        "Umm...none?":
+            pass
+
+
 
 
 label postMeet:
