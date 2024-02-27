@@ -1,13 +1,14 @@
 ﻿# The script of the game goes in this file.
 # Declare characters used by this game. The color argument colorizes the name of the character.
+
+#initializing images?
 init:
     image lilymeetbutton = "lilymeetbutton.png"
+    image lilyStudyButton = "lilyStudyButton.png"
     image doneMeet = "doneMeet.png"
     image lilyCharPage = "lilyCharPage.png"
 
-
-
-
+#declaring and defining characters
 define l = Character("Lily")
 define n = Character("narrator")
 define y = Character("you")
@@ -49,7 +50,7 @@ label continue:
 
 #Meeting lily
 label lily:
-    show lily meet
+    show lilymeet
     #convo bt u and lily no menu
     l "Oh, hello. I'm Lily. You're new right?"
     y "Yep, I'm [player_name]. This is my first day!"
@@ -60,33 +61,32 @@ label lily:
     l "Well [player_name], it was nice to meet you. I gotta run to a club meeting, but I hope I see you around!"
 
     call screen meet_nav
-    #l "I hope your first day is going well! What class are you most excited for?"
-    #menu:
-    #    "English":
-    #        pass
-    #    "Math":
-    #        pass
-            #jump("lilyhappy")
-    #    "Umm...none?":
-    #        pass
-
-
 
 #after clicking "i dont want to talk to anyone else" button
 label postMeet:
-    show bg room 
+    show hallway 
     n "Oop, there's the bell. Better hurry to class!"
     "*hours later*"
     n "Whew! You completed your lessons for the day, but it's clear that 
     you'll need to study hard to keep up with your classmates..."
 
     call screen study_nav
-
+    
+#Lily Character page where you can talk or study
 label lilyCharacter:
     show lilyCharPage
-    n "you made it here"
+    call screen character_nav
+    show lilyCharPage
+    #show lilyCharPage
+    #n "you made it here"
     #call screen character_nav
     #STILL NEED TO MAKE THIS SCREEN IN SCREENS outline down by other screens in screens.rpy
+
+label lilyStudy:
+    hide lilyCharPage
+    show bg hallway
+    show lilymeet
+    n "YOU ARE AT LILY STUDY PAGE"
     
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the
@@ -122,3 +122,13 @@ label lilyCharacter:
     # This ends the game.
 
 #    return
+    #l "I hope your first day is going well! What class are you most excited for?"
+    #menu:
+    #    "English":
+    #        pass
+    #    "Math":
+    #        pass
+            #jump("lilyhappy")
+    #    "Umm...none?":
+    #        pass
+

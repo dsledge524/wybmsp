@@ -1643,7 +1643,8 @@ screen character_nav():
     modal True
     imagebutton idle "lilyStudyButton":
         action Jump("lilyStudy")
-        xpos ypos
+        xpos 594 ypos 1461
+
 
 
 
