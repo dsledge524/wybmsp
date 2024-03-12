@@ -1646,6 +1646,54 @@ screen character_nav():
         xpos 594 ypos 1461
 
 
+## Choice screen ###############################################################
+##
+## This screen is used to display the in-game choices presented by the menu
+## statement. The one parameter, items, is a list of objects, each with caption
+## and action fields.
+##
+## https://www.renpy.org/doc/html/screen_special.html#choice
+
+
+screen choice(items):
+    style_prefix "choice"
+
+    hbox:
+        xalign 0.5
+        spacing 20
+        vbox:
+            textbutton items[0].caption text_size gui.button_text_size action items[0].action
+            textbutton items[1].caption text_size gui.button_text_size action items[1].action
+        vbox:
+            textbutton items[2].caption text_size gui.button_text_size action items[2].action
+            textbutton items[3].caption text_size gui.button_text_size action items[3].action
+
+
+## When this is true, menu captions will be spoken by the narrator. When false,
+## menu captions will be displayed as empty buttons.
+define config.narrator_menu = True
+
+
+style choice_vbox is vbox
+style choice_button is button
+style choice_button_text is button_text
+
+style choice_vbox:
+    xalign 0.5
+    ypos 500
+    yanchor 0.5
+
+    spacing gui.choice_spacing
+
+style choice_button is default:
+    properties gui.button_properties("choice_button")
+    #hover_sound audio.hover
+
+style choice_button_text is default:
+    properties gui.button_text_properties("choice_button")
+
+
+
 
 
 screen enterName:
