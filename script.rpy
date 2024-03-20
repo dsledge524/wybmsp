@@ -58,6 +58,7 @@ init:
     image lilyStudyButton = "lilyStudyButton.png"
     image doneMeet = "doneMeet.png"
     image lilyCharPage = "lilyCharPage.png"
+    image blankStudy = "blankStudy.png"
    
 $ import question_list
 
@@ -90,7 +91,7 @@ label continue:
     $ _skipping = True
 
     #show screen say(n, player_name)
-    show bg school
+    scene bg school
 
     "Hello [player_name]. Welcome to Pointcrest Academy!"
     "You're joining the class late, so you'll need to study extra hard to keep up with your peers."
@@ -127,7 +128,7 @@ label postMeet:
 label lilyCharacter:
     show lilyCharPage
     call screen character_nav
-    show lilyCharPage
+    #show lilyCharPage
     #show lilyCharPage
     #n "you made it here"
     #call screen character_nav
@@ -136,14 +137,16 @@ label lilyCharacter:
 
 label lilyStudy:
 
-    hide lilyCharPage
-    show bg hallway
-    show lilymeet
+    #hide lilyCharPage
+    scene blankStudy
+    #show lilymeet
     n "YOU ARE AT LILY STUDY PAGE"
-    n "Alright, let's test your math skills!"
+    #n "Alright, let's test your math skills!"
+     
+
     # this is where I want the questions to start 
-    $ questionData = generate_question()
-    n "[questionData[question]]"
+    #$ questionData = generate_question()
+    #n "[questionData[question]]"
 
 
 

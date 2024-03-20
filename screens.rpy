@@ -1702,7 +1702,7 @@ screen enterName:
         xalign 0.5 #with this you define location of the vbox (if you would type xalign 0 and yalign 0 it would appear in top left corner)
         yalign 0.5 #there is a link to all of positional properties: https://www.renpy.org/doc/html/style_properties.html#position-style-properties
         text "What is your name?": #we added text using this
-                size 40 #in here you can edit the text with those: https://www.renpy.org/doc/html/style_properties.html#text-style-properties
+                size 60 #in here you can edit the text with those: https://www.renpy.org/doc/html/style_properties.html#text-style-properties
                 #at transform: #with this you can animate the text
                 #    alpha 0 #here you type parameters which are used at first                   pause 0.5 #you can add a pause
                 #    linear 2 alpha 1.0 #now you add how it's changed (I used linear but here are all: https://www.renpy.org/doc/html/atl.html#warpers) then the time of the animation and then to what it is changed
