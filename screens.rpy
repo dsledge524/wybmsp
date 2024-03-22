@@ -1715,3 +1715,49 @@ screen enterName:
                 action Jump("continue")#in action you type what will happen, when you click ok
                 keysym('K_RETURN', 'K_KP_ENTER') #you can also add keysym to activate it with a keyboard
             #    activate_sound("audio/tick.ogg") #you can also add a sound when clicked
+
+
+screen q1_nav():
+    add "blankStudy"
+    modal True
+
+    # Call the generate_question function and store its result in a variable
+    python:
+        question_data = generate_question()
+
+    # Display the question
+    text question_data["question"]:
+        xpos 0.5
+        ypos 0.2
+
+    # Display answer choices using textbuttons
+    textbutton question_data["a1"] action Jump("wrong") xpos 0.5 ypos 0.3
+    textbutton question_data["a2"] action Jump("wrong") xpos 0.5 ypos 0.4
+    textbutton question_data["a3"] action Jump("correct") xpos 0.5 ypos 0.5
+    textbutton question_data["a4"] action Jump("wrong") xpos 0.5 ypos 0.6
+
+
+    
+# screen q1_nav():
+#     add "blankStudy"
+#     modal True
+#     text Function(generate_question)["question"]
+    
+#     #text "[questionDict['question']]"
+#     imagebutton idle "userAnswer1":
+#         focus_mask True
+#         action Jump("wrong")
+#         text Function(generate_question)["a1"]
+
+#     imagebutton idle "userAnswer2":
+#         focus_mask True
+#         action Jump("wrong")
+
+#     imagebutton idle "userAnswer3":
+#         focus_mask True
+#         action Jump("correct")
+#         #$ correct_answers +=1
+
+#     imagebutton idle "userAnswer4":
+#         focus_mask True
+#         action Jump("wrong")
