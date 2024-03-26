@@ -1727,14 +1727,14 @@ screen q1_nav():
 
     # Display the question
     text question_data["question"]:
-        xpos 0.5
-        ypos 0.2
+        xpos 106
+        ypos 800
 
     # Display answer choices using textbuttons
-    textbutton question_data["a1"] action Jump("wrong") xpos 0.5 ypos 0.3
-    textbutton question_data["a2"] action Jump("wrong") xpos 0.5 ypos 0.4
-    textbutton question_data["a3"] action Jump("correct") xpos 0.5 ypos 0.5
-    textbutton question_data["a4"] action Jump("wrong") xpos 0.5 ypos 0.6
+    textbutton question_data["a1"] action Jump("wrong") xpos 540 ypos 1060
+    textbutton question_data["a2"] action Jump("wrong") xpos 540 ypos 1300
+    textbutton question_data["a3"] action Jump("correct") xpos 540 ypos 1530
+    textbutton question_data["a4"] action Jump("wrong") xpos 540 ypos 1760
 
 
     
