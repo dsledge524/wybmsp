@@ -3,7 +3,11 @@
 init python:       
     import random
     current_question_idx = 0  # Index of the current question
-    correct_answers = 0  # Number of correct answers
+    user_score = 0  # Number of correct answers
+    user_answer = 0
+    question_data = None
+    correct_answers = 0
+    
     from random import shuffle
 
     def generate_question():
@@ -39,20 +43,60 @@ init python:
         
         # Generate answer choices
         choices = [answer - 2, answer + 3, answer, answer + 1]
-        shuffle(choices)  # Shuffle the answer choices
+
+        #shuffle(choices)  # Shuffle the answer choices
+
+        #global correct_answer
+        correct_answer = answer
+        
+
         
         # Return the question and shuffled answer choices as a dictionary
-        return {
+        question_data = {
             'question': question,
             'a1': str(choices[0]),
             'a2': str(choices[1]),
             'a3': str(choices[2]),
-            'a4': str(choices[3])
+            'a4': str(choices[3]),
+            'correct_answer': correct_answer
         }
+        return question_data
 
 
 
-        
+
+
+screen q1_nav():
+    add "blankStudy"
+    modal True
+
+    # Call the generate_question function and store its result in a variable
+    python:
+        question_data = generate_question()
+  
+
+    # Display the question
+    text question_data["question"]:
+        xpos 106
+        ypos 800
+
+    # Display answer choices using textbuttons
+    textbutton question_data["a1"] xpos 540 ypos 1060 action Jump("wrong")
+    textbutton question_data["a2"] xpos 540 ypos 1300 action Jump("wrong")
+    textbutton question_data["a3"] xpos 540 ypos 1530 action Jump("correct")
+    textbutton question_data["a4"] xpos 540 ypos 1760 action Jump("wrong")
+    
+
+    
+            
+
+label check_answer:
+    #$ correct_answer
+    if int(user_answer) == question_data[correct_answer]:
+        $ user_score += 1
+        jump correct
+    else:
+        jump wrong
 
 
 
@@ -69,7 +113,6 @@ init:
     image userAnswer3 = "userAnswer3.png"
     image userAnswer4 = "userAnswer4.png"
    
-$ import question_list
 
 #declaring and defining characters
 define l = Character("Lily")
@@ -156,22 +199,13 @@ label lilyStudy:
     
 
 
-        
-    #show lilymeet
-    #n "YOU ARE AT LILY STUDY PAGE"
-    #n "Alright, let's test your math skills!"
-     
-
-    # this is where I want the questions to start 
-    #$ questionData = generate_question()
-    #n "[questionData[question]]"
 
 label correct:
     scene black
-    $ correct_answers +=1
+    $ correct_answers += 1
     n "Correct! Tap to continue"
     #n "You've answered [correct_answers] questions correct"
-    if correct_answers > 5:
+    if correct_answers % 5 == 0:
         jump endStudy
     else:
         jump lilyStudy
@@ -180,11 +214,8 @@ label correct:
 label wrong:
     scene black
     n "Wrong answer. Tap to continue"
+    n "Your answer was [user_answer] The correct answer was [correct_answer]" 
     jump lilyStudy
-
-
-
-
 
 
 

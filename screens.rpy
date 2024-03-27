@@ -1717,24 +1717,25 @@ screen enterName:
             #    activate_sound("audio/tick.ogg") #you can also add a sound when clicked
 
 
-screen q1_nav():
-    add "blankStudy"
-    modal True
+# screen q1_nav():
+#     add "blankStudy"
+#     modal True
 
-    # Call the generate_question function and store its result in a variable
-    python:
-        question_data = generate_question()
+#     # Call the generate_question function and store its result in a variable
+#     python:
+#         question_data = generate_question()
 
-    # Display the question
-    text question_data["question"]:
-        xpos 106
-        ypos 800
+#     # Display the question
+#     text question_data["question"]:
+#         xpos 106
+#         ypos 800
 
-    # Display answer choices using textbuttons
-    textbutton question_data["a1"] action Jump("wrong") xpos 540 ypos 1060
-    textbutton question_data["a2"] action Jump("wrong") xpos 540 ypos 1300
-    textbutton question_data["a3"] action Jump("correct") xpos 540 ypos 1530
-    textbutton question_data["a4"] action Jump("wrong") xpos 540 ypos 1760
+#     # Display answer choices using textbuttons
+#     textbutton question_data["a1"] xpos 540 ypos 1060 action [SetVariable("user_answer", question_data["a1"]), Call("check_answer")]
+#     textbutton question_data["a2"] xpos 540 ypos 1300 action [SetVariable("user_answer", question_data["a2"]), Call("check_answer")]
+#     textbutton question_data["a3"] xpos 540 ypos 1530 action [SetVariable("user_answer", question_data["a3"]), Call("check_answer")]
+#     textbutton question_data["a4"] xpos 540 ypos 1760 action [SetVariable("user_answer", question_data["a4"]), Call("check_answer")]
+    
 
 
     
