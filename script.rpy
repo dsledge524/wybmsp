@@ -112,6 +112,8 @@ init:
     image userAnswer2 = "userAnswer2.png"
     image userAnswer3 = "userAnswer3.png"
     image userAnswer4 = "userAnswer4.png"
+    image lilywrongpage = "lilywrongpage.png"
+    image lilycorrectpage = "lilycorrectpage.png"
    
 
 #declaring and defining characters
@@ -201,9 +203,9 @@ label lilyStudy:
 
 
 label correct:
-    scene black
+    scene lilycorrectpage
     $ correct_answers += 1
-    n "Correct! Tap to continue"
+    l "Correct! Tap to continue"
     #n "You've answered [correct_answers] questions correct"
     if correct_answers % 5 == 0:
         jump endStudy
@@ -212,9 +214,9 @@ label correct:
     
 
 label wrong:
-    scene black
-    n "Wrong answer. Tap to continue"
-    n "Your answer was [user_answer] The correct answer was [correct_answer]" 
+    scene lilywrongpage
+    l "Wrong answer. Tap to continue"
+    #n "Your answer was [user_answer] The correct answer was [correct_answer]" 
     jump lilyStudy
 
 

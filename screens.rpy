@@ -1613,12 +1613,13 @@ screen meet_nav():
     add "meet"
     modal True
     
-
+    text "Who do you approach?":
+        size 75 xpos .1 ypos .09
         #lily meet button
     imagebutton idle "lilymeetbutton":
-        # focus_mask True
+        focus_mask True
         action Jump("lily")
-        xpos 65 ypos 290
+        #xpos 65 ypos 290
         
 
     imagebutton idle "doneMeet":
@@ -1631,12 +1632,15 @@ screen meet_nav():
 screen study_nav():
     add "meet"
     modal True
+
+    text "Who will be your study partner?":
+        size 75 xpos .1 ypos .06
     
         #lily study button
     imagebutton idle "lilymeetbutton":
         # focus_mask True
         action Jump("lilyCharacter")
-        xpos 65 ypos 290
+        #xpos 65 ypos 290
         
 #This is the character screen where u choose if u wanna talk or study
 screen character_nav():
