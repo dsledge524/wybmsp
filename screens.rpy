@@ -1639,7 +1639,7 @@ screen study_nav():
         #lily study button
     imagebutton idle "lilymeetbutton":
         # focus_mask True
-        action Jump("lilyCharacter")
+        action Jump("lilyStudy")
         #xpos 65 ypos 290
         
 #This is the character screen where u choose if u wanna talk or study

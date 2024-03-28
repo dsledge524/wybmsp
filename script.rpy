@@ -158,7 +158,8 @@ label continue:
 
 #Meeting lily
 label lily:
-    show lilymeet
+    show lilymeet1:
+        ypos .2
     #convo bt u and lily no menu
     l "Oh, hello. I'm Lily. You're new right?"
     y "Yep, I'm [player_name]. This is my first day!"
