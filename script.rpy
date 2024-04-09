@@ -80,6 +80,9 @@ screen q1_nav():
         xpos 106
         ypos 800
 
+    imagebutton idle "backButton":
+        action Jump("endStudy")
+
     # Display answer choices using textbuttons
     textbutton question_data["a1"] xpos 540 ypos 1060 action Jump("wrong")
     textbutton question_data["a2"] xpos 540 ypos 1300 action Jump("wrong")
@@ -114,6 +117,8 @@ init:
     image userAnswer4 = "userAnswer4.png"
     image lilywrongpage = "lilywrongpage.png"
     image lilycorrectpage = "lilycorrectpage.png"
+    image hallway = "Hallway.png"
+    image backButton = "backButton.png"
    
 
 #declaring and defining characters
@@ -152,7 +157,7 @@ label continue:
     "You're joining the class late, so you'll need to study extra hard to keep up with your peers."
 
     "Before your lesson starts, you mill about the common space and see many new faces."
-   
+     
     call screen meet_nav
 
 
@@ -168,7 +173,7 @@ label lily:
     - or if you ever need Math help- I'm your gal!"
     y "Thanks! I'll keep that in mind"
     l "Well [player_name], it was nice to meet you. I gotta run to a club meeting, but I hope I see you around!"
-
+    
     call screen meet_nav
 
 #after clicking "i dont want to talk to anyone else" button
@@ -223,6 +228,7 @@ label wrong:
 
 
 label endStudy:
+    screen black
     l "You've answered [correct_answers] questions correctly! Would you like to continue?"
     pass
     # generate questions $ n: "You answered " + str(correct_answers) + " questions correctly!"
