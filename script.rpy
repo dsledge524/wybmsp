@@ -9,7 +9,7 @@ init python:
     correct_answers = 0
     
     from random import shuffle
-
+# this is the function that generates questions
     def generate_question():
         # Define operation types (e.g., addition, subtraction, multiplication, division)
         operations = ["+", "-", "*", "/"]
@@ -63,36 +63,25 @@ init python:
         return question_data
 
 
-
-
-
+# screen that displays the questions and answers
 screen q1_nav():
     add "blankStudy"
     modal True
-
-    # Call the generate_question function and store its result in a variable
+# Call the generate_question function and store its result in a variable
     python:
         question_data = generate_question()
-  
-
-    # Display the question
+# Display the question
     text question_data["question"]:
         xpos 106
         ypos 800
-
     imagebutton idle "backButton":
         action Jump("endStudy")
-
-    # Display answer choices using textbuttons
+# Display answer choices using textbuttons
     textbutton question_data["a1"] xpos 540 ypos 1060 action Jump("wrong")
     textbutton question_data["a2"] xpos 540 ypos 1300 action Jump("wrong")
     textbutton question_data["a3"] xpos 540 ypos 1530 action Jump("correct")
     textbutton question_data["a4"] xpos 540 ypos 1760 action Jump("wrong")
-    
-
-    
-            
-
+        
 label check_answer:
     #$ correct_answer
     if int(user_answer) == question_data[correct_answer]:
@@ -104,7 +93,7 @@ label check_answer:
 
 
 
-#initializing images?
+#initializing images
 init:
     image lilymeetbutton = "lilymeetbutton.png"
     image lilyStudyButton = "lilyStudyButton.png"
@@ -119,7 +108,9 @@ init:
     image lilycorrectpage = "lilycorrectpage.png"
     image hallway = "Hallway.png"
     image backButton = "backButton.png"
-   
+    image pinkBG = "pinkBG.png"
+    image takeBack = "noTakeMeBackButton.png"
+    image studyMore = "yesStudyMoreButton.png"
 
 #declaring and defining characters
 define l = Character("Lily")
@@ -138,7 +129,7 @@ label start:
     $ _preferences.afm_enable = False #turn off auto
     $ ui.interact() #we are using this to stop the the game, but unfortunately skip and auto will ignore this so that's why we disabled skip and auto
 
-    #now we create the label continue to jump here after we decide the name
+#now we create the label continue to jump here after we decide the name
 label continue:
     $ player_name = player_name.strip() #removes spaces at the end
 
@@ -158,7 +149,7 @@ label continue:
 
     "Before your lesson starts, you mill about the common space and see many new faces."
      
-    call screen meet_nav
+    call screen meet_character
 
 
 #Meeting lily
@@ -174,7 +165,7 @@ label lily:
     y "Thanks! I'll keep that in mind"
     l "Well [player_name], it was nice to meet you. I gotta run to a club meeting, but I hope I see you around!"
     
-    call screen meet_nav
+    call screen meet_character
 
 #after clicking "i dont want to talk to anyone else" button
 label postMeet:
@@ -184,28 +175,24 @@ label postMeet:
     n "Whew! You completed your lessons for the day, but it's clear that 
     you'll need to study hard to keep up with your classmates..."
 
+    #call screen study_nav
+    jump study_character
+
+label study_character:
     call screen study_nav
     
 #Lily Character page where you can talk or study
 label lilyCharacter:
     show lilyCharPage
     call screen character_nav
-    #show lilyCharPage
-    #show lilyCharPage
-    #n "you made it here"
-    #call screen character_nav
-    #STILL NEED TO MAKE THIS SCREEN IN SCREENS outline down by other screens in screens.rpy
-
 
 label lilyStudy:
-
     #hide lilyCharPage
     scene blankStudy
     #$ generate_question()
     
     call screen q1_nav
     
-
 
 
 label correct:
@@ -225,12 +212,22 @@ label wrong:
     #n "Your answer was [user_answer] The correct answer was [correct_answer]" 
     jump lilyStudy
 
+screen endStudy:
+    modal True
+
+    text "You've answered [correct_answers] questions correctly! Would you like to continue?"
+    
+    imagebutton idle "studyMore":
+        action Jump("lilyStudy")
+
+    imagebutton idle "takeBack":
+        action Call("study_character")
+
 
 
 label endStudy:
-    screen black
-    l "You've answered [correct_answers] questions correctly! Would you like to continue?"
-    pass
+    scene pinkBG
+    call screen endStudy
     # generate questions $ n: "You answered " + str(correct_answers) + " questions correctly!"
     # ... (rest of your endStudy label code)
 

@@ -1609,7 +1609,7 @@ style slider_slider:
     xsize 900
 
 # this is the screen where you can "meet" the characters for the first time
-screen meet_nav():
+screen meet_character():
     add "meet"
     modal True
     
