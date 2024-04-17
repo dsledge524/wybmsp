@@ -14,37 +14,27 @@ init python:
     question_data : Tuple[str, List[int], int]
     question_data = ("", [], 0)
 
-    # questions = [
-    #     {
-    #         'question': "What is 2 + 2?",
-    #         'choices': [3, 4, 5, 6],
-    #         'correct_index': 1  # Index of the correct answer in the choices list
-    #     },
-    #     {
-    #         'question': "What is 5 - 3?",
-    #         'choices': [1, 2, 3, 4],
-    #         'correct_index': 1
-    #     },
-    #     {
-    #         'question': "What is 3 * 4?",
-    #         'choices': [9, 10, 11, 12],
-    #         'correct_index': 3
-    #     },
-    #     {
-    #         'question': "What is 10 / 2?",
-    #         'choices': [2, 3, 4, 5],
-    #         'correct_index': 3
-    #     },
-    #     # Add more questions here as needed
-    # ]
-
-
     questions = [
         ("What is 2 + 2?", [3, 4, 5, 6], 1),  # Tuple format: (question, choices, correct_index)
         ("What is 5 - 3?", [1, 2, 3, 4], 1),
         ("What is 3 * 4?", [9, 10, 11, 12], 3),
         ("What is 10 / 2?", [2, 3, 4, 5], 3),
-        # Add more questions here as needed
+        ("What is 7 + 3?", [8, 9, 10, 11], 2),
+        ("What is 20 - 9?", [10, 11, 12, 13], 1),
+        ("What is 5 * 6?", [25, 30, 35, 40], 1),
+        ("What is 36 / 6?", [4, 5, 6, 7], 2),
+        ("What is 8 + 5?", [11, 12, 13, 14], 2),
+        ("What is 15 - 7?", [6, 7, 8, 9], 2),
+        ("What is 9 * 3?", [24, 25, 26, 27], 3),
+        ("What is 63 / 7?", [7, 8, 9, 10], 2),
+        ("What is 12 + 9?", [19, 20, 21, 22], 2),
+        ("What is 30 - 15?", [12, 13, 14, 15], 3),
+        ("What is 8 * 4?", [28, 30, 32, 34], 2),
+        ("What is 56 / 8?", [6, 7, 8, 9], 1),
+        ("What is 10 + 10?", [18, 19, 20, 21], 2),
+        ("What is 25 - 12?", [12, 13, 14, 15], 1),
+        ("What is 6 * 6?", [30, 36, 42, 48], 1),
+        ("What is 49 / 7?", [5, 6, 7, 8], 2),
     ]
 
 
@@ -57,6 +47,10 @@ screen q1_nav():
         question = question_data[0]
         choices = question_data[1]
         correct_index = question_data[2]
+
+    image "lilyHappy":
+        xpos 606
+        ypos 260
         
 # Display the question
     text question:
@@ -70,18 +64,7 @@ screen q1_nav():
     textbutton str(choices[2]) xpos 540 ypos 1520 action SetVariable("user_index", 2) , SetVariable("correct_index", question_data[2]) ,Jump("check_answer")
     textbutton str(choices[3]) xpos 540 ypos 1750 action SetVariable("user_index", 3) , SetVariable("correct_index", question_data[2]) ,Jump("check_answer")
     
-    
-    # python:
-    #     if user_index == correct_index:
-    #         Jump("correct")
-    #     else:
-    #         Jump("wrong")
-    # # Display answer choices using textbuttons
-#     textbutton str(question_data["choices"][0]) xpos 540 ypos 1060 action SetVariable("user_index", 0), Jump("check_answer")
-#     textbutton str(question_data["choices"][1]) xpos 540 ypos 1300 action SetVariable("user_index", 1), Jump("check_answer")
-#     textbutton str(question_data["choices"][2]) xpos 540 ypos 1530 action SetVariable("user_index", 2), Jump("check_answer")
-#     textbutton str(question_data["choices"][3]) xpos 540 ypos 1760 action SetVariable("user_index", 3), Jump("check_answer")
-        
+
 
 label check_answer:
     $ check = correct_index
@@ -89,11 +72,7 @@ label check_answer:
         $ user_score += 1
         jump correct
     else:
-        l "[user_index] and [check]" 
         jump wrong
-
-
-    #$ current_question_index += 1 
 
 
 #initializing images
@@ -114,6 +93,7 @@ init:
     image pinkBG = "pinkBG.png"
     image takeBack = "noTakeMeBackButton.png"
     image studyMore = "yesStudyMoreButton.png"
+    image lilyHappy = "lilyHappy.png"
 
 #declaring and defining characters
 define l = Character("Lily")
@@ -130,14 +110,14 @@ label start:
     show screen enterName 
     scene bg cloud
     $ _preferences.afm_enable = False #turn off auto
-    $ ui.interact() #we are using this to stop the the game, but unfortunately skip and auto will ignore this so that's why we disabled skip and auto
+    $ ui.interact()
 
 #now we create the label continue to jump here after we decide the name
 label continue:
     $ player_name = player_name.strip() #removes spaces at the end
 
     if player_name == "":
-        $ player_name="Josh" #will be used if player types nothing
+        $ player_name= "Josh" #will be used if player types nothing
 
     hide screen enterName
 
@@ -181,21 +161,25 @@ label postMeet:
     #call screen study_nav
     jump study_character
 
+
 label study_character:
     call screen study_nav
     
+
 #Lily Character page where you can talk or study
 label lilyCharacter:
     show lilyCharPage
     call screen character_nav
 
+
 label lilyStudy:
-    #hide lilyCharPage
     scene blankStudy
-    #$ generate_question()
+    jump questions_screen
     
+
+label questions_screen:
+    scene blankStudy
     call screen q1_nav
-    
 
 
 label correct:
@@ -203,7 +187,7 @@ label correct:
     $ correct_answers += 1
     l "Correct! Tap to continue"
     #n "You've answered [correct_answers] questions correct"
-    if correct_answers % 5 == 0:
+    if correct_answers % 10 == 0:
         jump endStudy
     else:
         jump lilyStudy
@@ -215,42 +199,36 @@ label wrong:
     #n "Your answer was [user_answer] The correct answer was [correct_answer]" 
     jump lilyStudy
 
+
 screen endStudy:
-    modal True
+    modal False
 
     text "You've answered [correct_answers] questions correctly! Would you like to continue?"
     
     imagebutton idle "studyMore":
-        action Jump("lilyStudy")
+        focus_mask True
+        action Jump("questions_screen")
 
     imagebutton idle "takeBack":
-        action Call("study_character")
+        focus_mask True
+        action Jump("good_session")
 
+label good_session:
+    scene pinkBG
+    l "Let's study again somtime!"
 
+    jump study_character
 
 label endStudy:
     scene pinkBG
     call screen endStudy
-    # generate questions $ n: "You answered " + str(correct_answers) + " questions correctly!"
-    # ... (rest of your endStudy label code)
 
 return
 
+      
 
-
-# return
-            #l "I hope your first day is going well! What class are you most excited for?"
-            #menu:
-            #    "English":
-            #        pass
-            #    "Math":
-            #        pass
-                    #jump("lilyhappy")
-            #    "Umm...none?":
-            #        pass
-        #       python:
-        #        
 # this is the function that generates questions
+#RIP this beauty :(
     # def generate_question():
     #     # Define operation types (e.g., addition, subtraction, multiplication, division)
     #     operations = ["+", "-", "*", "/"]
@@ -287,8 +265,6 @@ return
     #     random.shuffle(choices)
 
     #     correct_index = choices.index(answer)
-
-
         
     #     # Return the question and shuffled answer choices as a dictionary
     #     question_data = {

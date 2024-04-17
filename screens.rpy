@@ -1642,6 +1642,7 @@ screen study_nav():
         action Jump("lilyStudy")
         #xpos 65 ypos 290
         
+
 #This is the character screen where u choose if u wanna talk or study
 screen character_nav():
     modal True
@@ -1675,6 +1676,7 @@ screen choice(items):
 
 ## When this is true, menu captions will be spoken by the narrator. When false,
 ## menu captions will be displayed as empty buttons.
+
 define config.narrator_menu = True
 
 
@@ -1699,7 +1701,6 @@ style choice_button_text is default:
 
 
 
-
 screen enterName:
     
     vbox: #now we want to do vbox to make the input bellow the textbox
@@ -1720,49 +1721,3 @@ screen enterName:
                 keysym('K_RETURN', 'K_KP_ENTER') #you can also add keysym to activate it with a keyboard
             #    activate_sound("audio/tick.ogg") #you can also add a sound when clicked
 
-
-# screen q1_nav():
-#     add "blankStudy"
-#     modal True
-
-#     # Call the generate_question function and store its result in a variable
-#     python:
-#         question_data = generate_question()
-
-#     # Display the question
-#     text question_data["question"]:
-#         xpos 106
-#         ypos 800
-
-#     # Display answer choices using textbuttons
-#     textbutton question_data["a1"] xpos 540 ypos 1060 action [SetVariable("user_answer", question_data["a1"]), Call("check_answer")]
-#     textbutton question_data["a2"] xpos 540 ypos 1300 action [SetVariable("user_answer", question_data["a2"]), Call("check_answer")]
-#     textbutton question_data["a3"] xpos 540 ypos 1530 action [SetVariable("user_answer", question_data["a3"]), Call("check_answer")]
-#     textbutton question_data["a4"] xpos 540 ypos 1760 action [SetVariable("user_answer", question_data["a4"]), Call("check_answer")]
-    
-
-
-    
-# screen q1_nav():
-#     add "blankStudy"
-#     modal True
-#     text Function(generate_question)["question"]
-    
-#     #text "[questionDict['question']]"
-#     imagebutton idle "userAnswer1":
-#         focus_mask True
-#         action Jump("wrong")
-#         text Function(generate_question)["a1"]
-
-#     imagebutton idle "userAnswer2":
-#         focus_mask True
-#         action Jump("wrong")
-
-#     imagebutton idle "userAnswer3":
-#         focus_mask True
-#         action Jump("correct")
-#         #$ correct_answers +=1
-
-#     imagebutton idle "userAnswer4":
-#         focus_mask True
-#         action Jump("wrong")
