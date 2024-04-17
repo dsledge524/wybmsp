@@ -2,95 +2,98 @@
 # Declare characters used by this game. The color argument colorizes the name of the character.
 init python:       
     import random
-    current_question_idx = 0  # Index of the current question
+    from typing import List, Tuple
+    #current_question_idx = 0  # Index of the current question
     user_score = 0  # Number of correct answers
-    user_answer = 0
-    question_data = None
+    user_index = None
+    correct_index = None
+    #question_data = dict
     correct_answers = 0
-    
     from random import shuffle
-# this is the function that generates questions
-    def generate_question():
-        # Define operation types (e.g., addition, subtraction, multiplication, division)
-        operations = ["+", "-", "*", "/"]
-        
-        # Set difficulty range (e.g., numbers between 1 and 10)
-        min_value = 1
-        max_value = 10
-        
-        # Randomly choose two numbers and an operation
-        num1 = random.randint(min_value, max_value)
-        num2 = random.randint(min_value, max_value)
-        operation = random.choice(operations)
-        
-        # Construct the question based on the chosen operation
-        if operation == "+":
-            question = "What is " + str(num1) + " + " + str(num2) + "?"
-            answer = num1 + num2
-        elif operation == "-":
-            question = "What is " + str(num1) + " - " + str(num2) + "?"
-            answer = num1 - num2
-        elif operation == "*":
-            question = "What is " + str(num1) + " * " + str(num2) + "?"
-            answer = num1 * num2
-        elif operation == "/":
-            # Ensure whole number division
-            while num1 % num2 != 0:
-                num1 = random.randint(min_value, max_value)
-                num2 = random.randint(min_value, max_value)
-            question = "What is " + str(num1) + " / " + str(num2) + "?"
-            answer = num1 // num2  # Integer division
-        
-        # Generate answer choices
-        choices = [answer - 2, answer + 3, answer, answer + 1]
+    current_question_index = 0
+    question_data : Tuple[str, List[int], int]
+    question_data = ("", [], 0)
 
-        #shuffle(choices)  # Shuffle the answer choices
+    # questions = [
+    #     {
+    #         'question': "What is 2 + 2?",
+    #         'choices': [3, 4, 5, 6],
+    #         'correct_index': 1  # Index of the correct answer in the choices list
+    #     },
+    #     {
+    #         'question': "What is 5 - 3?",
+    #         'choices': [1, 2, 3, 4],
+    #         'correct_index': 1
+    #     },
+    #     {
+    #         'question': "What is 3 * 4?",
+    #         'choices': [9, 10, 11, 12],
+    #         'correct_index': 3
+    #     },
+    #     {
+    #         'question': "What is 10 / 2?",
+    #         'choices': [2, 3, 4, 5],
+    #         'correct_index': 3
+    #     },
+    #     # Add more questions here as needed
+    # ]
 
-        #global correct_answer
-        correct_answer = answer
-        
 
-        
-        # Return the question and shuffled answer choices as a dictionary
-        question_data = {
-            'question': question,
-            'a1': str(choices[0]),
-            'a2': str(choices[1]),
-            'a3': str(choices[2]),
-            'a4': str(choices[3]),
-            'correct_answer': correct_answer
-        }
-        return question_data
+    questions = [
+        ("What is 2 + 2?", [3, 4, 5, 6], 1),  # Tuple format: (question, choices, correct_index)
+        ("What is 5 - 3?", [1, 2, 3, 4], 1),
+        ("What is 3 * 4?", [9, 10, 11, 12], 3),
+        ("What is 10 / 2?", [2, 3, 4, 5], 3),
+        # Add more questions here as needed
+    ]
 
 
 # screen that displays the questions and answers
 screen q1_nav():
     add "blankStudy"
     modal True
-# Call the generate_question function and store its result in a variable
     python:
-        question_data = generate_question()
+        question_data = random.choice(questions)
+        question = question_data[0]
+        choices = question_data[1]
+        correct_index = question_data[2]
+        
 # Display the question
-    text question_data["question"]:
+    text question:
         xpos 106
         ypos 800
     imagebutton idle "backButton":
         action Jump("endStudy")
-# Display answer choices using textbuttons
-    textbutton question_data["a1"] xpos 540 ypos 1060 action Jump("wrong")
-    textbutton question_data["a2"] xpos 540 ypos 1300 action Jump("wrong")
-    textbutton question_data["a3"] xpos 540 ypos 1530 action Jump("correct")
-    textbutton question_data["a4"] xpos 540 ypos 1760 action Jump("wrong")
+
+    textbutton str(choices[0]) xpos 540 ypos 1060 action SetVariable("user_index", 0) , SetVariable("correct_index", question_data[2]) , Jump("check_answer")
+    textbutton str(choices[1]) xpos 540 ypos 1290 action SetVariable("user_index", 1) , SetVariable("correct_index", question_data[2]) ,Jump("check_answer")
+    textbutton str(choices[2]) xpos 540 ypos 1520 action SetVariable("user_index", 2) , SetVariable("correct_index", question_data[2]) ,Jump("check_answer")
+    textbutton str(choices[3]) xpos 540 ypos 1750 action SetVariable("user_index", 3) , SetVariable("correct_index", question_data[2]) ,Jump("check_answer")
+    
+    
+    # python:
+    #     if user_index == correct_index:
+    #         Jump("correct")
+    #     else:
+    #         Jump("wrong")
+    # # Display answer choices using textbuttons
+#     textbutton str(question_data["choices"][0]) xpos 540 ypos 1060 action SetVariable("user_index", 0), Jump("check_answer")
+#     textbutton str(question_data["choices"][1]) xpos 540 ypos 1300 action SetVariable("user_index", 1), Jump("check_answer")
+#     textbutton str(question_data["choices"][2]) xpos 540 ypos 1530 action SetVariable("user_index", 2), Jump("check_answer")
+#     textbutton str(question_data["choices"][3]) xpos 540 ypos 1760 action SetVariable("user_index", 3), Jump("check_answer")
         
+
 label check_answer:
-    #$ correct_answer
-    if int(user_answer) == question_data[correct_answer]:
+    $ check = correct_index
+    if user_index == check:
         $ user_score += 1
         jump correct
     else:
+        l "[user_index] and [check]" 
         jump wrong
 
 
+    #$ current_question_index += 1 
 
 
 #initializing images
@@ -247,3 +250,50 @@ return
             #        pass
         #       python:
         #        
+# this is the function that generates questions
+    # def generate_question():
+    #     # Define operation types (e.g., addition, subtraction, multiplication, division)
+    #     operations = ["+", "-", "*", "/"]
+        
+    #     # Set difficulty range (e.g., numbers between 1 and 10)
+    #     min_value = 1
+    #     max_value = 10
+        
+    #     # Randomly choose two numbers and an operation
+    #     num1 = random.randint(min_value, max_value)
+    #     num2 = random.randint(min_value, max_value)
+    #     operation = random.choice(operations)
+        
+    #     # Construct the question based on the chosen operation
+    #     if operation == "+":
+    #         question = "What is " + str(num1) + " + " + str(num2) + "?"
+    #         answer = num1 + num2
+    #     elif operation == "-":
+    #         question = "What is " + str(num1) + " - " + str(num2) + "?"
+    #         answer = num1 - num2
+    #     elif operation == "*":
+    #         question = "What is " + str(num1) + " * " + str(num2) + "?"
+    #         answer = num1 * num2
+    #     elif operation == "/":
+    #         # Ensure whole number division
+    #         while num1 % num2 != 0:
+    #             num1 = random.randint(min_value, max_value)
+    #             num2 = random.randint(min_value, max_value)
+    #         question = "What is " + str(num1) + " / " + str(num2) + "?"
+    #         answer = num1 // num2  # Integer division
+        
+    #     # Generate list of answer choices
+    #     choices = [answer - 2, answer + 3, answer, answer + 1]
+    #     random.shuffle(choices)
+
+    #     correct_index = choices.index(answer)
+
+
+        
+    #     # Return the question and shuffled answer choices as a dictionary
+    #     question_data = {
+    #         'question': question,
+    #         'choices': choices,
+    #         'correct_index': correct_index
+    #     }
+    #     return question_data
