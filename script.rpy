@@ -13,6 +13,7 @@ init python:
     current_question_index = 0
     question_data : Tuple[str, List[int], int]
     question_data = ("", [], 0)
+    lilyRelationship = 0
 
     questions = [
         ("What is 2 + 2?", [3, 4, 5, 6], 1),  # Tuple format: (question, choices, correct_index)
@@ -36,6 +37,23 @@ init python:
         ("What is 6 * 6?", [30, 36, 42, 48], 1),
         ("What is 49 / 7?", [5, 6, 7, 8], 2),
     ]
+
+
+
+screen bars:
+    bar:
+        value x
+        range 100
+        left_bar "left.png"
+        right_bar "right.png"
+        thumb "bar_thumb.png"
+        thumb_offset 9
+        
+
+
+        xysize(200,25)
+        xalign 0.5
+        yalign 0.5
 
 
 # screen that displays the questions and answers
@@ -94,6 +112,15 @@ init:
     image takeBack = "noTakeMeBackButton.png"
     image studyMore = "yesStudyMoreButton.png"
     image lilyHappy = "lilyHappy.png"
+    image studyOrTalk = "LilyStudyOrTalk.png"
+    image SOTstudyButton = "SOTstudyButton.png"
+    image SOTtalkButton = "SOTtalkButton.png"
+    image bar_thumb = "bar_thumb.png"
+    image left = "left.png"
+    image right = "right.png"
+    
+
+    
 
 #declaring and defining characters
 define l = Character("Lily")
@@ -168,18 +195,55 @@ label study_character:
 
 #Lily Character page where you can talk or study
 label lilyCharacter:
-    show lilyCharPage
-    call screen character_nav
+    #show lilyCharPage
+    call screen LilyStudyOrTalk
 
-
+#FIX THIS SECTION 
 label lilyStudy:
     scene blankStudy
-    jump questions_screen
+    jump talk_or_study_screen
     
+
+label talk_or_study_screen:
+    scene studyOrTalk
+    call screen LilyStudyOrTalk
+
+screen LilyStudyOrTalk:
+    modal True
+
+    bar:
+        value correct_answers
+        range 100
+        left_bar "left.png"
+        right_bar "right.png"
+        #thumb "bar_thumb.png"
+            #size .5
+        #thumb_offset 9
+        
+
+
+        xysize(800,50)
+        xalign 0.5
+        yalign 0.5
+    imagebutton idle "backButton":
+        focus_mask True
+        action Jump("study_character")
+
+    imagebutton idle "SOTstudyButton":
+        focus_mask True
+        action Jump("questions_screen")
+
+    imagebutton idle "SOTtalkButton":
+        focus_mask True
+        action Jump("questions_screen") 
+    
+
 
 label questions_screen:
     scene blankStudy
     call screen q1_nav
+
+
 
 
 label correct:
@@ -201,7 +265,7 @@ label wrong:
 
 
 screen endStudy:
-    modal False
+    modal True
 
     text "You've answered [correct_answers] questions correctly! Would you like to continue?"
     
@@ -216,6 +280,9 @@ screen endStudy:
 label good_session:
     scene pinkBG
     l "Let's study again somtime!"
+    $ lilyRelationship += correct_answers
+    l "[lilyRelationship]"
+    $ correct_answers = 0
 
     jump study_character
 
