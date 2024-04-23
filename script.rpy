@@ -4,17 +4,20 @@ init python:
     import random
     from typing import List, Tuple
     #current_question_idx = 0  # Index of the current question
-    user_score = 0  # Number of correct answers
     user_index = None
     correct_index = None
     #question_data = dict
-    correct_answers = 0
+    correct_answers = 0 #number of correct answers
     from random import shuffle
     current_question_index = 0
     question_data : Tuple[str, List[int], int]
     question_data = ("", [], 0)
     lilyRelationship = 0
     max_lilyRelationship = 100
+    lilyMeterFull = False
+
+
+
 
     questions = [
         ("What is 2 + 2?", [3, 4, 5, 6], 1),  # Tuple format: (question, choices, correct_index)
@@ -39,7 +42,9 @@ init python:
         ("What is 49 / 7?", [5, 6, 7, 8], 2),
     ]
 
-
+init:
+    transform customzoom:
+        zoom 0.5
 
 screen bars:
     bar:
@@ -88,7 +93,7 @@ screen q1_nav():
 label check_answer:
     $ check = correct_index
     if user_index == check:
-        $ user_score += 1
+        $ correct_answers += 10
         jump correct
     else:
         jump wrong
@@ -116,7 +121,7 @@ init:
     image studyOrTalk = "LilyStudyOrTalk.png"
     image SOTstudyButton = "SOTstudyButton.png"
     image SOTtalkButton = "SOTtalkButton.png"
-    image bar_thumb = "bar_thumb.png"
+    image heart = "heart.png"
     image left = "left.png"
     image right = "right.png"
     
@@ -189,12 +194,13 @@ label postMeet:
     #call screen study_nav
     jump study_character
 
-
+#label calls study navigation screen. This is where you pick the character ur studying with
 label study_character:
     call screen study_nav
     
 
-#Lily Character page where you can talk or study
+#Lily Character page where you can talk or study. After you click on her character from study_nav screen
+#calls the study or talk page for lily
 label lilyCharacter:
     #show lilyCharPage
     call screen LilyStudyOrTalk
@@ -209,12 +215,18 @@ label talk_or_study_screen:
     scene studyOrTalk
     call screen LilyStudyOrTalk
 
-
+# Screen where user chooses to study or talk with character. Relationship bar at top
 screen LilyStudyOrTalk:
     modal True
     text "{size=+50}Lily":
         xpos .45
         ypos 200
+    
+    #Delete this once you get this working
+    text "{size=+50}[lilyRelationship]":
+        xpos .45
+        ypos 100
+    
 
     bar:
         xmaximum 800
@@ -226,11 +238,20 @@ screen LilyStudyOrTalk:
         thumb_shadow None
         bar_vertical False
         xalign .5 yalign .18
-        #left_bar "left.png"
-        #right_bar "right.png"
 
-        
 
+    python:
+        if lilyRelationship >= 100:
+            lilyMeterFull = True
+
+    if lilyMeterFull:
+        imagebutton idle "heart":
+            focus_mask True
+            action Jump("story1")
+            xpos 700 ypos 450
+            at customzoom
+
+    
     imagebutton idle "backButton":
         focus_mask True
         action Jump("study_character")
@@ -250,12 +271,12 @@ label questions_screen:
     call screen q1_nav
 
 
-scene lilyCorrect
+
 
 
 label correct:
     scene lilycorrectpage
-    $ correct_answers += 1
+
     l "Correct! Tap to continue"
     #n "You've answered [correct_answers] questions correct"
     if correct_answers % 10 == 0:
@@ -286,9 +307,9 @@ screen endStudy:
 
 label good_session:
     scene pinkBG
-    call screen bar
-    l "Let's study again somtime!"
     $ lilyRelationship += correct_answers
+    #call screen bar
+    l "Let's study again somtime!"
     
 
     jump study_character
@@ -311,6 +332,12 @@ screen bar:
         thumb_shadow None
         bar_vertical False
         xalign .5 yalign .20
+
+label story1:
+    scene black
+    l "Story 1 scene"
+    pass
+
 
     
 # this is the function that generates questions
