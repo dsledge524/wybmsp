@@ -1638,7 +1638,7 @@ screen study_nav():
     
         #lily study button
     imagebutton idle "lilymeetbutton":
-        # focus_mask True
+        focus_mask True
         action Jump("lilyStudy")
         #xpos 65 ypos 290
         

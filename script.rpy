@@ -14,6 +14,7 @@ init python:
     question_data : Tuple[str, List[int], int]
     question_data = ("", [], 0)
     lilyRelationship = 0
+    max_lilyRelationship = 100
 
     questions = [
         ("What is 2 + 2?", [3, 4, 5, 6], 1),  # Tuple format: (question, choices, correct_index)
@@ -208,23 +209,28 @@ label talk_or_study_screen:
     scene studyOrTalk
     call screen LilyStudyOrTalk
 
+
 screen LilyStudyOrTalk:
     modal True
+    text "{size=+50}Lily":
+        xpos .45
+        ypos 200
 
     bar:
-        value correct_answers
-        range 100
-        left_bar "left.png"
-        right_bar "right.png"
-        #thumb "bar_thumb.png"
-            #size .5
-        #thumb_offset 9
+        xmaximum 800
+        value lilyRelationship
+        range max_lilyRelationship
+        left_gutter 0
+        right_gutter 0
+        thumb None
+        thumb_shadow None
+        bar_vertical False
+        xalign .5 yalign .18
+        #left_bar "left.png"
+        #right_bar "right.png"
+
         
 
-
-        xysize(800,50)
-        xalign 0.5
-        yalign 0.5
     imagebutton idle "backButton":
         focus_mask True
         action Jump("study_character")
@@ -244,6 +250,7 @@ label questions_screen:
     call screen q1_nav
 
 
+scene lilyCorrect
 
 
 label correct:
@@ -254,14 +261,14 @@ label correct:
     if correct_answers % 10 == 0:
         jump endStudy
     else:
-        jump lilyStudy
+        jump questions_screen
     
 
 label wrong:
     scene lilywrongpage
     l "Wrong answer. Tap to continue"
     #n "Your answer was [user_answer] The correct answer was [correct_answer]" 
-    jump lilyStudy
+    jump questions_screen
 
 
 screen endStudy:
@@ -279,10 +286,10 @@ screen endStudy:
 
 label good_session:
     scene pinkBG
+    call screen bar
     l "Let's study again somtime!"
     $ lilyRelationship += correct_answers
-    l "[lilyRelationship]"
-    $ correct_answers = 0
+    
 
     jump study_character
 
@@ -293,7 +300,19 @@ label endStudy:
 return
 
       
+screen bar:
+    bar:
+        xmaximum 700
+        value lilyRelationship
+        range max_lilyRelationship
+        left_gutter 0
+        right_gutter 0
+        thumb None
+        thumb_shadow None
+        bar_vertical False
+        xalign .5 yalign .20
 
+    
 # this is the function that generates questions
 #RIP this beauty :(
     # def generate_question():
