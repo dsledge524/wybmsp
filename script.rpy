@@ -15,6 +15,10 @@ init python:
     lilyRelationship = 0
     max_lilyRelationship = 100
     lilyMeterFull = False
+    lilyRelationshipLevel = 0
+
+
+
 
 
 
@@ -124,6 +128,7 @@ init:
     image heart = "heart.png"
     image left = "left.png"
     image right = "right.png"
+    image storyUnlocked = "storyUnlocked.png"
     
 
     
@@ -218,6 +223,15 @@ label talk_or_study_screen:
 # Screen where user chooses to study or talk with character. Relationship bar at top
 screen LilyStudyOrTalk:
     modal True
+
+    python:
+        if lilyRelationship >= 100:
+            lilyMeterFull = True
+            lilyRelationshipLevel == 1
+        elif lilyRelationship >= 200:
+            lilyMeterFull = True
+            lilyRelationshipLevel == 2
+            
     text "{size=+50}Lily":
         xpos .45
         ypos 200
@@ -240,16 +254,25 @@ screen LilyStudyOrTalk:
         xalign .5 yalign .18
 
 
-    python:
-        if lilyRelationship >= 100:
-            lilyMeterFull = True
+
+
 
     if lilyMeterFull:
-        imagebutton idle "heart":
+        imagebutton idle "storyUnlocked":
+            #text "story unlocked"
             focus_mask True
             action Jump("story1")
-            xpos 700 ypos 450
+            xpos 700 ypos 550
             at customzoom
+        
+
+
+    image "heart":
+        xpos 800 ypos 170
+
+    text "[lilyRelationshipLevel]":
+        size 80
+        xpos 926 ypos 290
 
     
     imagebutton idle "backButton":
@@ -336,7 +359,7 @@ screen bar:
 label story1:
     scene black
     l "Story 1 scene"
-    pass
+    jump talk_or_study_screen
 
 
     
