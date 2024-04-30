@@ -164,7 +164,7 @@ label continue:
 
     #show screen say(n, player_name)
     scene bg school
-
+    
     "Hello [player_name]. Welcome to Pointcrest Academy!"
     "You're joining the class late, so you'll need to study extra hard to keep up with your peers."
 
@@ -225,12 +225,12 @@ screen LilyStudyOrTalk:
     modal True
 
     python:
-        if lilyRelationship >= 100:
+        if lilyRelationship >= 200:
             lilyMeterFull = True
-            lilyRelationshipLevel == 1
-        elif lilyRelationship >= 200:
+            lilyRelationshipLevel = 2
+        elif lilyRelationship >= 100:
             lilyMeterFull = True
-            lilyRelationshipLevel == 2
+            lilyRelationshipLevel = 1
             
     text "{size=+50}Lily":
         xpos .45
@@ -273,7 +273,7 @@ screen LilyStudyOrTalk:
     text "[lilyRelationshipLevel]":
         size 80
         xpos 926 ypos 290
-
+    text "lilyRelationshipLevel: [lilyRelationshipLevel] "
     
     imagebutton idle "backButton":
         focus_mask True
@@ -364,7 +364,7 @@ label story1:
 
     
 # this is the function that generates questions
-#RIP this beauty :(
+#RIP 
     # def generate_question():
     #     # Define operation types (e.g., addition, subtraction, multiplication, division)
     #     operations = ["+", "-", "*", "/"]
