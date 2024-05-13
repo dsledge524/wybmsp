@@ -16,6 +16,7 @@ init python:
     max_lilyRelationship = 100
     lilyMeterFull = False
     lilyRelationshipLevel = 0
+    totalLilyRelationship = 0
 
 
 
@@ -223,10 +224,10 @@ screen LilyStudyOrTalk:
     modal True
 
     python:
-        if lilyRelationship >= 200:
+        if totalLilyRelationship >= 200:
             lilyMeterFull = True
             lilyRelationshipLevel = 2
-        elif lilyRelationship >= 100:
+        elif totalLilyRelationship >= 100:
             lilyMeterFull = True
             lilyRelationshipLevel = 1
             
@@ -264,6 +265,8 @@ screen LilyStudyOrTalk:
     text "[lilyRelationshipLevel]":
         size 80
         xpos 926 ypos 290
+    
+    text "lilyrelationshiplevel: [lilyRelationship] total relation tho: [totalLilyRelationship]"
 
     
     imagebutton idle "backButton":
@@ -319,9 +322,13 @@ screen endStudy:
         focus_mask True
         action Jump("good_session")
 
+    
+
 label good_session:
     scene pinkBG
     $ lilyRelationship += correct_answers
+    $ totalLilyRelationship += correct_answers
+    $ correct_answers = 0
     #call screen bar
     l "Let's study again somtime!"
     
@@ -373,6 +380,7 @@ label story1:
     n "And maybe your interactions with Lily will lead to much more than just solving equations..."
 
     $ lilyMeterFull = False
+    $ lilyRelationship = 0
     jump talk_or_study_screen
 
 
