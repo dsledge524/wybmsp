@@ -19,10 +19,6 @@ init python:
 
 
 
-
-
-
-
     questions = [
         ("What is 2 + 2?", [3, 4, 5, 6], 1),  # Tuple format: (question, choices, correct_index)
         ("What is 5 - 3?", [1, 2, 3, 4], 1),
@@ -129,14 +125,16 @@ init:
     image left = "left.png"
     image right = "right.png"
     image storyUnlocked = "storyUnlocked.png"
+    image otherChar = "otherChar.png"
+    image classroom = "classroom.png"
     
 
     
 
 #declaring and defining characters
 define l = Character("Lily")
-define n = Character("narrator")
-define y = Character("you")
+define n = Character("Narrator")
+define y = Character("You")
 
 
 # The game starts here.
@@ -165,10 +163,10 @@ label continue:
     #show screen say(n, player_name)
     scene bg school
     
-    "Hello [player_name]. Welcome to Pointcrest Academy!"
-    "You're joining the class late, so you'll need to study extra hard to keep up with your peers."
+    n "Hello [player_name]. Welcome to Pointcrest Academy!"
+    n "You're joining the class late, so you'll need to study extra hard to keep up with your peers."
 
-    "Before your lesson starts, you mill about the common space and see many new faces."
+    n "Before your lesson starts, you mill about the common space and see many new faces."
      
     call screen meet_character
 
@@ -237,11 +235,10 @@ screen LilyStudyOrTalk:
         ypos 200
     
     #Delete this once you get this working
-    text "{size=+50}[lilyRelationship]":
-        xpos .45
-        ypos 100
+#    text "{size=+50}[lilyRelationship]":
+#        xpos .45
+#        ypos 100
     
-
     bar:
         xmaximum 800
         value lilyRelationship
@@ -253,10 +250,6 @@ screen LilyStudyOrTalk:
         bar_vertical False
         xalign .5 yalign .18
 
-
-
-
-
     if lilyMeterFull:
         imagebutton idle "storyUnlocked":
             #text "story unlocked"
@@ -264,16 +257,14 @@ screen LilyStudyOrTalk:
             action Jump("story1")
             xpos 700 ypos 550
             at customzoom
-        
-
-
+            
     image "heart":
         xpos 800 ypos 170
 
     text "[lilyRelationshipLevel]":
         size 80
         xpos 926 ypos 290
-    text "lilyRelationshipLevel: [lilyRelationshipLevel] "
+
     
     imagebutton idle "backButton":
         focus_mask True
@@ -335,7 +326,7 @@ label good_session:
     l "Let's study again somtime!"
     
 
-    jump study_character
+    jump talk_or_study_screen
 
 label endStudy:
     scene pinkBG
@@ -357,8 +348,31 @@ screen bar:
         xalign .5 yalign .20
 
 label story1:
-    scene black
-    l "Story 1 scene"
+
+    scene classroom
+
+    n "The bell rings, signaling the end of another grueling day of classes."
+    n "You gather your textbooks and notes, your mind preoccupied with the looming math assignment."
+    y "This math problem is driving me crazy. I can't wrap my head around it."
+
+    show lilymeet1:
+        ypos .2
+
+    l "Hey, [player_name]! I couldn't help but notice you seem a bit frustrated. Is everything okay?"
+
+    y "Oh, hey Lily. Yeah, I'm just struggling with this math problem. It's like my brain refuses to cooperate."
+
+    l "Well, lucky for you, math is kind of my thing. If you ever need help, feel free to ask. I'm the president of the Math club, after all."
+
+    y "Really? That would be amazing! I could definitely use some help right now."
+
+    l "Of course! Just let me know when you're free, and we can tackle that problem together."
+
+    n "With a newfound sense of hope, you feels a weight lifted off their shoulders."
+    n "Maybe, with Lily's help, you can finally conquer the intimidating world of math."
+    n "And maybe your interactions with Lily will lead to much more than just solving equations..."
+
+    $ lilyMeterFull = False
     jump talk_or_study_screen
 
 

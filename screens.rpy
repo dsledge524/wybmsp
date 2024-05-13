@@ -1620,6 +1620,10 @@ screen meet_character():
         focus_mask True
         action Jump("lily")
         #xpos 65 ypos 290
+
+    imagebutton idle "otherChar":
+        focus_mask True
+        pass
         
 
     imagebutton idle "doneMeet":
@@ -1641,6 +1645,10 @@ screen study_nav():
         focus_mask True
         action Jump("lilyStudy")
         #xpos 65 ypos 290
+
+    imagebutton idle "otherChar":
+        focus_mask True
+        pass
         
 
 #This is the character screen where u choose if u wanna talk or study
