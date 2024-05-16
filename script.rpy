@@ -76,25 +76,35 @@ screen q1_nav():
     image "lilyHappy":
         xpos 606
         ypos 260
+
+
         
 # Display the question
     text question:
         xpos 106
         ypos 800
+        size 70
     imagebutton idle "backButton":
         action Jump("endStudy")
 
-    textbutton str(choices[0]) xpos 540 ypos 1060 action SetVariable("user_index", 0) , SetVariable("correct_index", question_data[2]) , Jump("check_answer")
-    textbutton str(choices[1]) xpos 540 ypos 1290 action SetVariable("user_index", 1) , SetVariable("correct_index", question_data[2]) ,Jump("check_answer")
-    textbutton str(choices[2]) xpos 540 ypos 1520 action SetVariable("user_index", 2) , SetVariable("correct_index", question_data[2]) ,Jump("check_answer")
-    textbutton str(choices[3]) xpos 540 ypos 1750 action SetVariable("user_index", 3) , SetVariable("correct_index", question_data[2]) ,Jump("check_answer")
-    
+    textbutton str(choices[0]) xpos .5 ypos 1060 action SetVariable("user_index", 0) , SetVariable("correct_index", question_data[2]) , Jump("check_answer"):
+        style_prefix "my"
 
+    textbutton str(choices[1]) xpos .5 ypos 1290 action SetVariable("user_index", 1) , SetVariable("correct_index", question_data[2]) ,Jump("check_answer"):
+        style_prefix "my"
+    textbutton str(choices[2]) xpos .5 ypos 1520 action SetVariable("user_index", 2) , SetVariable("correct_index", question_data[2]) ,Jump("check_answer"):
+        style_prefix "my"
+    textbutton str(choices[3]) xpos .5 ypos 1750 action SetVariable("user_index", 3) , SetVariable("correct_index", question_data[2]) ,Jump("check_answer"):
+        style_prefix "my"
+    
+style my_button_text is text:
+    size 60
+    color "000000"
 
 label check_answer:
     $ check = correct_index
     if user_index == check:
-        $ correct_answers += 10
+        $ correct_answers += 20
         jump correct
     else:
         jump wrong
@@ -266,7 +276,7 @@ screen LilyStudyOrTalk:
         size 80
         xpos 926 ypos 290
     
-    text "lilyrelationshiplevel: [lilyRelationship] total relation tho: [totalLilyRelationship]"
+    #text "lilyrelationshiplevel: [lilyRelationship] total relation tho: [totalLilyRelationship]"
 
     
     imagebutton idle "backButton":
@@ -296,10 +306,12 @@ label correct:
 
     l "Correct! Tap to continue"
     #n "You've answered [correct_answers] questions correct"
-    if correct_answers % 10 == 0:
+    if correct_answers % 100 == 0:
         jump endStudy
     else:
         jump questions_screen
+
+    
     
 
 label wrong:
@@ -312,7 +324,10 @@ label wrong:
 screen endStudy:
     modal True
 
-    text "You've answered [correct_answers] questions correctly! Would you like to continue?"
+    text "You've answered [correct_answers] questions correctly! Would you like to continue?":
+        size 80
+
+
     
     imagebutton idle "studyMore":
         focus_mask True
@@ -375,7 +390,7 @@ label story1:
 
     l "Of course! Just let me know when you're free, and we can tackle that problem together."
 
-    n "With a newfound sense of hope, you feels a weight lifted off their shoulders."
+    n "With a newfound sense of hope, you feel a weight lifted off your shoulders."
     n "Maybe, with Lily's help, you can finally conquer the intimidating world of math."
     n "And maybe your interactions with Lily will lead to much more than just solving equations..."
 
